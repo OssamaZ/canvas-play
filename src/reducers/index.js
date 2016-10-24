@@ -2,12 +2,13 @@ import { combineReducers } from 'redux';
 
 // Reducers
 import { componentsList } from "./componentsListReducer";
-import { canvasComponents, activeComponentUID } from "./canvasComponentsReducer";
+import { canvasComponents, activeComponentUID, activeDrawingComponent } from "./canvasComponentsReducer";
 
 const appReducer = combineReducers({
   componentsList,
   canvasComponents,
-  activeComponentUID
+  activeComponentUID,
+  activeDrawingComponent
 });
 
 const rootReducer = (state, action) => {

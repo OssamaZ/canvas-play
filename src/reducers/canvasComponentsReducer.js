@@ -3,6 +3,7 @@ import AppConstants from '../constants/index';
 let {
 	ADD_ELEMENT_TO_CANVAS,
 	CLEAR_CANVAS,
+	CHANGE_DRAWING_COMPONENT,
 
 	MAKE_COMPONENT_ACTIVE,
 	DELETE_COMPONENT,
@@ -51,6 +52,18 @@ export const activeComponentUID = (state = null, action) => {
 
 		case MAKE_COMPONENT_ACTIVE:
 			return action.uid;
+
+	}
+
+   return state;
+}
+
+export const activeDrawingComponent = (state = 'rectangle', action) => {
+
+	switch (action.type) {
+
+		case CHANGE_DRAWING_COMPONENT:
+			return action.name;
 
 	}
 

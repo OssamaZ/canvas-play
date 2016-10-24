@@ -7,6 +7,7 @@ import store from '../app';
 let {
 	ADD_ELEMENT_TO_CANVAS,
 	CLEAR_CANVAS,
+	CHANGE_DRAWING_COMPONENT,
 
 	MAKE_COMPONENT_ACTIVE,
 	DELETE_COMPONENT,
@@ -59,5 +60,12 @@ export const updateCanvasComponent = (uid, newProps) => {
 		type: UPDATE_CANVAS_COMPONENT,
 		uid,
 		newProps
+	}
+}
+
+export const changeTheDrawingComponent = (name) => {
+	return {
+		type: CHANGE_DRAWING_COMPONENT,
+		name
 	}
 }
