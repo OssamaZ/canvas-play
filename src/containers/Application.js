@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Application extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+// Containers
+import ComponentsLibrary from './ComponentsLibrary';
 
-  render() {
-    return (<h2>I'm Alive!</h2>);
-  }
-}
+const Application = () =>
+  <div className='container-wrapper'>
+    <section className='editor-actions-container'>
+      <h3>Canvas playground</h3>
+    </section>
+    <section className='editor-container'>
+      <ComponentsLibrary />
+      <div className='canvas-container' />
+      <div className='component-parameters' />
+    </section>
+  </div>
+
+export default Application;
