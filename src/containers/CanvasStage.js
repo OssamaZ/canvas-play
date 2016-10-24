@@ -8,8 +8,8 @@ import {
   addComponentToCanvas
 } from '../actions/canvasActions';
 
-// Rectangle
-import Rectangle from '../components/Rectangle';
+// Canvas Components (rect, circle etc) Mapper
+import CanvasComponent from '../components';
 
 class CanvasStage extends Component {
 
@@ -28,7 +28,7 @@ class CanvasStage extends Component {
         }}>
         <Layer>
           {_.values(this.props.canvasComponents).map(canvasComponent => (
-            <Rectangle key={canvasComponent.uid} />
+            <CanvasComponent key={canvasComponent.uid} component={canvasComponent} />
           ))}
         </Layer>
       </Stage>

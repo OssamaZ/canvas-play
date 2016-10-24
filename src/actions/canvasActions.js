@@ -15,7 +15,7 @@ export const addComponentToCanvas = (type, x, y) => {
       component = _.cloneDeep(store.getState().componentsList[type]);
 
   // to draw a component, we need its x and y coordinates on the canvas
-	component = {...component, uid, x, y}
+	component = {...component, uid, x, y};
 	return {
 		type: ADD_ELEMENT_TO_CANVAS,
 		uid,
