@@ -1,3 +1,4 @@
+import undoable from 'redux-undo';
 import AppConstants from '../constants/index';
 
 let {
@@ -10,7 +11,7 @@ let {
 	UPDATE_CANVAS_COMPONENT
 } = AppConstants;
 
-export const canvasComponents = (state = {}, action) => {
+const canvasComponentsBasic = (state = {}, action) => {
 
    switch (action.type) {
 
@@ -38,9 +39,10 @@ export const canvasComponents = (state = {}, action) => {
 
    return state;
 }
+const undoableCanvasComponents = undoable(canvasComponentsBasic);
+export const canvasComponents = undoableCanvasComponents;
 
-
-export const activeComponentUID = (state = null, action) => {
+const activeComponentUIDBasic = (state = null, action) => {
 
 	switch (action.type) {
 
@@ -57,6 +59,8 @@ export const activeComponentUID = (state = null, action) => {
 
    return state;
 }
+const undoableActiveComponentUID = undoable(activeComponentUIDBasic);
+export const activeComponentUID = undoableActiveComponentUID;
 
 export const activeDrawingComponent = (state = 'rectangle', action) => {
 

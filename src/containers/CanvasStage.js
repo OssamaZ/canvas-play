@@ -41,9 +41,10 @@ class CanvasStage extends Component {
 
 }
 
+// .present is the way redux-undo tracks the different versions of my state
 const mapStateToProps = ({canvasComponents}) => {
 	return {
-    canvasComponents
+    canvasComponents: canvasComponents.present
 	}
 }
 

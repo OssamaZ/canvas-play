@@ -2,27 +2,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
 // Actions
 import {
   clearCanvas
 } from '../actions/canvasActions';
 
-const CanvasHistoryActions = ({clearCanvas}) =>
+const CanvasHistoryActions = ({canUndo, canRedo, clearCanvas, undo, redo}) =>
   <div className='editor-actions'>
     <ClearCanvasBtn clearCanvas={clearCanvas} />
-    <UndoBtn />
-    <RedoBtn />
+    <UndoBtn canUndo={canUndo} undo={undo} />
+    <RedoBtn canRedo={canRedo} redo={redo} />
     <span className=''>Changes Auto-saved</span>
   </div>
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = ({canvasComponents}) => {
   return {
-    clearCanvas: () => dispatch(clearCanvas())
+    canUndo: canvasComponents.past.length > 0,
+    canRedo: canvasComponents.future.length > 0
   }
 }
 
-export default connect(null, mapDispatchToProps)(CanvasHistoryActions);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCanvas: () => dispatch(clearCanvas()),
+    undo: () => dispatch(UndoActionCreators.undo()),
+    redo: () => dispatch(UndoActionCreators.redo())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CanvasHistoryActions);
 
 // Tiny buttons.. i LOVE functions
 const ClearCanvasBtn = ({clearCanvas}) =>
@@ -35,18 +45,20 @@ const ClearCanvasBtn = ({clearCanvas}) =>
     </ReactTooltip>
   </a>
 
-const UndoBtn = () =>
-  <a href="#" className={classnames('zmdi zmdi-undo', {'disabled': true})} onClick={e => {
+const UndoBtn = ({canUndo, undo}) =>
+  <a href="#" className={classnames('zmdi zmdi-undo', {'disabled': !canUndo})} onClick={e => {
       e.preventDefault();
+      undo();
     }} data-tip data-for="undo-tooltip">
     <ReactTooltip id='undo-tooltip' type="dark" effect="solid" place='bottom' class='tooltip'>
       Undo
     </ReactTooltip>
   </a>
 
-const RedoBtn = () =>
-  <a href="#" className={classnames('zmdi zmdi-redo', {'disabled': true})} onClick={e => {
+const RedoBtn = ({canRedo, redo}) =>
+  <a href="#" className={classnames('zmdi zmdi-redo', {'disabled': !canRedo})} onClick={e => {
       e.preventDefault();
+      redo();
     }} data-tip data-for="redo-tooltip">
     <ReactTooltip id='redo-tooltip' type="dark" effect="solid" place='bottom' class='tooltip'>
       Redo

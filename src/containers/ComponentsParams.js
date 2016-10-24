@@ -17,10 +17,11 @@ const ComponentsParams = ({canvasComponents, activeComponentUID, deleteComponent
   )
 }
 
+// .present is the way redux-undo tracks the different versions of my state
 const mapStateToProps = ({canvasComponents, activeComponentUID}) => {
   return {
-    canvasComponents,
-    activeComponentUID
+    canvasComponents: canvasComponents.present,
+    activeComponentUID: activeComponentUID.present
   }
 }
 
