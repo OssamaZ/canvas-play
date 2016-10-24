@@ -4,7 +4,8 @@ import _ from 'lodash';
 
 // Actions
 import {
-  makeComponentActive
+  makeComponentActive,
+  updateCanvasComponent
 } from '../actions/canvasActions';
 
 import RectangleComponent from './RectangleComponent';
@@ -33,10 +34,10 @@ class CanvasComponent extends Component {
   }
 
   onDragEnd(e) {
-    let _newProps = {...this.props.element};
+    let _newProps = {...this.props.component};
     _newProps.x = e.target.getX();
     _newProps.y = e.target.getY();
-    // this.props.dispatch(updateCanvasComponent(this.props.element.uid, _newProps));
+    this.props.updateCanvasComponent(this.props.component.uid, _newProps);
   }
 
   resizeCurrentComponent(e) {
@@ -48,8 +49,8 @@ class CanvasComponent extends Component {
         activeResizeCirlceY = activeResizeCirlce.getY();
 
     // get all the resize circles (depends on the component type)
-    let componentRef = `${this.props.element.uid}-element`,
-        groupRef = `${this.props.element.uid}-group`;
+    let componentRef = `${this.props.component.uid}-component`,
+        groupRef = `${this.props.component.uid}-group`;
     let group = this.refs[componentRef].refs[groupRef];
 
     let topLeftResizeCircle = group.get('.topLeft')[0],
@@ -60,7 +61,7 @@ class CanvasComponent extends Component {
     // depending on the x,y of the instance,
     // we should update other resize circles,
     // and x of the component plus it's with/height
-    let _newProps = {...this.props.element};
+    let _newProps = {...this.props.component};
     let _newX = group.getX() - topLeftResizeCircle.getX(),
         _newY = group.getY() - topLeftResizeCircle.getY();
     switch(whichResizeCircle) {
@@ -71,7 +72,7 @@ class CanvasComponent extends Component {
           _newProps['height'] = bottomLeftResizeCircle.getY() - topLeftResizeCircle.getY();
           break;
     }
-    // this.props.dispatch(updateCanvasComponent(this.props.element.uid, _newProps));
+    this.props.updateCanvasComponent(this.props.component.uid, _newProps);
   }
 
   render() {
@@ -87,7 +88,8 @@ class CanvasComponent extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeComponentActive: (uid) => dispatch(makeComponentActive(uid))
+    makeComponentActive: (uid) => dispatch(makeComponentActive(uid)),
+    updateCanvasComponent: (uid, newProps) => dispatch(updateCanvasComponent(uid, newProps))
   }
 }
 

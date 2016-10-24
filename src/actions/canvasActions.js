@@ -7,8 +7,10 @@ import store from '../app';
 let {
 	ADD_ELEMENT_TO_CANVAS,
 	CLEAR_CANVAS,
+
 	MAKE_COMPONENT_ACTIVE,
-	DELETE_COMPONENT
+	DELETE_COMPONENT,
+	UPDATE_CANVAS_COMPONENT
 } = AppConstants;
 
 export const addComponentToCanvas = (type, x, y) => {
@@ -42,5 +44,13 @@ export const deleteComponent = (uid) => {
 	return {
 		type: DELETE_COMPONENT,
 		uid
+	}
+}
+
+export const updateCanvasComponent = (uid, newProps) => {
+	return {
+		type: UPDATE_CANVAS_COMPONENT,
+		uid,
+		newProps
 	}
 }

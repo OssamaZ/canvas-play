@@ -3,8 +3,10 @@ import AppConstants from '../constants/index';
 let {
 	ADD_ELEMENT_TO_CANVAS,
 	CLEAR_CANVAS,
+
 	MAKE_COMPONENT_ACTIVE,
-	DELETE_COMPONENT
+	DELETE_COMPONENT,
+	UPDATE_CANVAS_COMPONENT
 } = AppConstants;
 
 export const canvasComponents = (state = {}, action) => {
@@ -21,6 +23,15 @@ export const canvasComponents = (state = {}, action) => {
 			let _state = {...state};
 			delete _state[action.uid];
 			return _state;
+
+		case UPDATE_CANVAS_COMPONENT:
+			return {
+				...state,
+				[action.uid]: {
+					...state[action.uid],
+					...action.newProps
+				}
+			};
 
 	}
 
