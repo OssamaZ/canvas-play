@@ -1,0 +1,23 @@
+.components-library {
+	margin: 0;
+	padding: 0;
+	background: #fafafb;
+	box-shadow: 1px 1px 3px rgba(0,0,0,.09);
+	z-index: 1;
+	width: 100px;
+	flex-shrink: 0;
+	li {
+		padding: 10px;
+		list-style: none;
+		border-bottom: 1px solid darken(#fafafb, 2%);
+		a {
+			display: block;
+		}
+		&:hover {
+			background: darken(#fafafb, 1%);
+		}
+		&.active {
+			background: darken(#fafafb, 2%);
+		}
+	}
+}
