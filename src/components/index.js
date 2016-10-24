@@ -64,6 +64,7 @@ class CanvasComponent extends Component {
     let _newProps = {...this.props.component};
     let _newX = group.getX() - topLeftResizeCircle.getX(),
         _newY = group.getY() - topLeftResizeCircle.getY();
+        
     switch(whichResizeCircle) {
        case 'topLeft':
           _newProps['x'] = group.getX() + activeResizeCirlce.getX();

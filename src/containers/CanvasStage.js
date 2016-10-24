@@ -5,7 +5,8 @@ import { Layer, Stage } from 'react-konva';
 
 // Actions
 import {
-  addComponentToCanvas
+  addComponentToCanvas,
+  makeComponentActive
 } from '../actions/canvasActions';
 
 // Canvas Components (rect, circle etc) Mapper
@@ -24,7 +25,10 @@ class CanvasStage extends Component {
     return (
       <Stage width={680} height={500} ref="myStage" className='canvas-container' onContentDblclick={e => {
           let {x,y} = this.refs.myStage.getStage().getPointerPosition();
-          this.props.dispatch(addComponentToCanvas('rectangle',x,y));
+          this.props.addComponentToCanvas('rectangle', x, y)
+          .then(uid => {
+            this.props.makeComponentActive(uid);
+          })
         }}>
         <Layer>
           {_.values(this.props.canvasComponents).map(canvasComponent => (
@@ -43,4 +47,11 @@ const mapStateToProps = ({canvasComponents}) => {
 	}
 }
 
-export default connect(mapStateToProps)(CanvasStage);
+const mapDispatchToProps = (dispatch) => {
+	return {
+    addComponentToCanvas: (type, x, y) => dispatch(addComponentToCanvas(type, x, y)),
+    makeComponentActive: (uid) => dispatch(makeComponentActive(uid))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CanvasStage);

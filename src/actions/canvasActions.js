@@ -14,17 +14,24 @@ let {
 } = AppConstants;
 
 export const addComponentToCanvas = (type, x, y) => {
-	let uid = shortid.generate(),
-      // WE SHOULD NOT ALTER THE STATE .. EVER
-      component = _.cloneDeep(store.getState().componentsList[type]);
+	return dispatch => {
+		let uid = shortid.generate(),
+	      // WE SHOULD NOT ALTER THE STATE .. EVER
+	      component = _.cloneDeep(store.getState().componentsList[type]);
 
-  // to draw a component, we need its x and y coordinates on the canvas
-	component = {...component, uid, x, y};
-	return {
-		type: ADD_ELEMENT_TO_CANVAS,
-		uid,
-		component
-	};
+		// to draw a component, we need its x and y coordinates on the canvas
+		component = {...component, uid, x, y};
+		dispatch({
+			type: ADD_ELEMENT_TO_CANVAS,
+			uid,
+			component
+		});
+		// EVERYTHING actually is synchronous, but since i need uid in my next step (make the component active)
+		// i made this whole action asynchronous ;)
+		return new Promise((resolve, reject) => {
+			resolve(uid);
+		});
+	}
 }
 
 export const clearCanvas = () => {
