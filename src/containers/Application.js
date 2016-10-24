@@ -4,6 +4,7 @@ import React from 'react';
 import ComponentsLibrary from './ComponentsLibrary';
 import CanvasHistoryActions from './CanvasHistoryActions';
 import ComponentsParams from './ComponentsParams';
+import CanvasStage from './CanvasStage';
 
 const Application = () =>
   <div className='container-wrapper'>
@@ -13,7 +14,7 @@ const Application = () =>
     </section>
     <section className='editor-container'>
       <ComponentsLibrary />
-      <div className='canvas-container' />
+      <CanvasStage />
       <ComponentsParams />
     </section>
   </div>
