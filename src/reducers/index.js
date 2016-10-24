@@ -1,10 +1,12 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
 // Reducers
 import { componentsList } from "./componentsListReducer";
+import { canvasComponents } from "./canvasComponentsReducer";
 
 const appReducer = combineReducers({
-  componentsList
+  componentsList,
+  canvasComponents
 });
 
 const rootReducer = (state, action) => {
