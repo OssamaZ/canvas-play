@@ -20,4 +20,33 @@
 		padding: 10px;
 	}
 
+	// params ui
+	.component-params-wrapper {
+		font-size: 14px;
+		padding: 10px;
+		> span {
+			display: inline-block;
+			font-size: 13px;
+			margin: 4px 0;
+			b {
+				padding: 0 0 0 4px;
+				color: $blue;
+			}
+		}
+		.delete {
+			display: block;
+			padding: 10px;
+			margin: 6px 0 10px;
+			text-align: center;
+			color: white;
+			background: $red;
+			text-decoration: none;
+			border-radius: 3px;
+			transition: all .3s;
+			&:hover {
+				background: darken($red, 5%);
+			}
+		}
+	}
+
 }

@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 // Actions
 import {
+  makeComponentActive
 } from '../actions/canvasActions';
 
 import RectangleComponent from './RectangleComponent';
@@ -28,7 +29,7 @@ class CanvasComponent extends Component {
 
   onClick(e) {
     e.cancelBubble = true;
-    // this.props.dispatch(makeComponentActive(this.props.element.uid));
+    this.props.makeComponentActive(this.props.component.uid);
   }
 
   onDragEnd(e) {
@@ -81,7 +82,13 @@ class CanvasComponent extends Component {
               resizeCurrentComponent={this.resizeCurrentComponent}
               onDragEnd={this.onDragEnd} />;
   }
-  
+
 }
 
-export default connect(null)(CanvasComponent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    makeComponentActive: (uid) => dispatch(makeComponentActive(uid))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(CanvasComponent);

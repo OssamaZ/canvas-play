@@ -22,7 +22,7 @@ class CanvasStage extends Component {
     // Layer - is a <canvas> element on the page
     // so you can use several canvases. It may help you to improve performance a lot.
     return (
-      <Stage width={680} height={500} ref="myStage" className='canvas-container' onContentClick={e => {
+      <Stage width={680} height={500} ref="myStage" className='canvas-container' onContentDblclick={e => {
           let {x,y} = this.refs.myStage.getStage().getPointerPosition();
           this.props.dispatch(addComponentToCanvas('rectangle',x,y));
         }}>
