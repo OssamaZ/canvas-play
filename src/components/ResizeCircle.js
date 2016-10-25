@@ -12,6 +12,10 @@ const ResizeCircle = ({x, y, name, resizeCb}) =>
     draggable={true}
     dragOnTop={false}
     onDragMove={e => resizeCb(e)}
+    onDragEnd={e => {
+      // Prevents redrawing of the resize circle, and let the redux store update take care of it
+      e.cancelBubble = true
+    }}
   />
 
 export default ResizeCircle;

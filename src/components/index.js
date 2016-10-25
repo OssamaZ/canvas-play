@@ -15,7 +15,7 @@ const MAPPER_OBJECT = {
   'rectangle': RectangleComponent
 }
 
-class CanvasComponent extends Component {
+class CanvasComponentMapper extends Component {
 
   constructor(props, context) {
     super(props, context);
@@ -41,6 +41,7 @@ class CanvasComponent extends Component {
   }
 
   resizeCurrentComponent(e) {
+    e.cancelBubble = true;
     // get the recize circle instance
     let activeResizeCirlce = e.target,
         whichResizeCircle = activeResizeCirlce.getName();
@@ -64,7 +65,7 @@ class CanvasComponent extends Component {
     let _newProps = {...this.props.component};
     let _newX = group.getX() - topLeftResizeCircle.getX(),
         _newY = group.getY() - topLeftResizeCircle.getY();
-        
+
     switch(whichResizeCircle) {
        case 'topLeft':
           _newProps['x'] = group.getX() + activeResizeCirlce.getX();
@@ -73,6 +74,7 @@ class CanvasComponent extends Component {
           _newProps['height'] = bottomLeftResizeCircle.getY() - topLeftResizeCircle.getY();
           break;
     }
+
     this.props.updateCanvasComponent(this.props.component.uid, _newProps);
   }
 
@@ -94,4 +96,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(CanvasComponent);
+export default connect(null, mapDispatchToProps)(CanvasComponentMapper);

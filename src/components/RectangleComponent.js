@@ -29,10 +29,14 @@ export default class RectangleComponent extends Component {
           fill={this.props.fill}
           stroke={this.props.stroke}
           strokeWidth={this.props.strokeWidth} />
-          <ResizeCircle name="topLeft" x={0} y={0} resizeCb={this.props.resizeCurrentComponent} />
-          <ResizeCircle name="topRight" x={this.props.width} y={0} resizeCb={this.props.resizeCurrentComponent} />
-          <ResizeCircle name="bottomRight" x={this.props.width} y={this.props.height} resizeCb={this.resizeCurrentComponent} />
-          <ResizeCircle name="bottomLeft" x={0} y={this.props.height} resizeCb={this.props.resizeCurrentComponent} />
+          <ResizeCircle name="topLeft" x={0} y={0}
+            resizeCb={this.props.resizeCurrentComponent} />
+          <ResizeCircle name="topRight" x={this.props.width} y={0} 
+            resizeCb={this.props.resizeCurrentComponent} />
+          <ResizeCircle name="bottomRight" x={this.props.width} y={this.props.height}
+            resizeCb={this.resizeCurrentComponent} />
+          <ResizeCircle name="bottomLeft" x={0} y={this.props.height}
+            resizeCb={this.props.resizeCurrentComponent} />
       </Group>
     );
   }

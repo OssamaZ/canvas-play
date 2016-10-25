@@ -10,7 +10,7 @@ import {
 } from '../actions/canvasActions';
 
 // Canvas Components (rect, circle etc) Mapper
-import CanvasComponent from '../components';
+import CanvasComponentMapper from '../components';
 
 class CanvasStage extends Component {
 
@@ -32,7 +32,7 @@ class CanvasStage extends Component {
         }}>
         <Layer>
           {_.values(this.props.canvasComponents).map(canvasComponent => (
-            <CanvasComponent key={canvasComponent.uid} component={canvasComponent} />
+            <CanvasComponentMapper key={canvasComponent.uid} component={canvasComponent} />
           ))}
         </Layer>
       </Stage>
