@@ -1,18 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 // Actions
 import {
-  deleteComponent
+  deleteComponent,
+  updateCanvasComponent
 } from '../actions/canvasActions';
 
-const ComponentsParams = ({canvasComponents, activeComponentUID, deleteComponent}) => {
+const ComponentsParams = ({canvasComponents, activeComponentUID, deleteComponent, updateCanvasComponent}) => {
   let _activeComponent = canvasComponents[activeComponentUID];
   return (
     <div className='component-parameters'>
       <h3>Parameters</h3>
       {!_activeComponent ? <p>To update a canvas elements styling, make it active by clicking on it</p> :
-        <ComponentParametersUI component={_activeComponent} deleteComponent={deleteComponent} />}
+        <ComponentParametersUI component={_activeComponent}
+          updateCanvasComponent={updateCanvasComponent}
+          deleteComponent={deleteComponent} />}
     </div>
   )
 }
@@ -27,14 +31,15 @@ const mapStateToProps = ({canvasComponents, activeComponentUID}) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteComponent: (uid) => dispatch(deleteComponent(uid))
+    deleteComponent: (uid) => dispatch(deleteComponent(uid)),
+    updateCanvasComponent: (uid, newProps) => dispatch(updateCanvasComponent(uid, newProps))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComponentsParams);
 
 // Active component params
-const ComponentParametersUI = ({component, deleteComponent}) =>
+const ComponentParametersUI = ({component, deleteComponent, updateCanvasComponent}) =>
   <div className='component-params-wrapper'>
     <span>UID: {component.type}/<b>{component.uid}</b></span>
     <a href='#' className='delete' onClick={e => {
@@ -43,5 +48,19 @@ const ComponentParametersUI = ({component, deleteComponent}) =>
       }}>
       DELETE
      </a>
-    <p>Other properties</p>
+    {Object.keys(component).map(propertyName => {
+      // color picker
+      if(propertyName === 'fill' || propertyName === 'stroke') {
+        return (
+          <p key={propertyName}>
+            <span>{propertyName}:</span>
+            <input type='color' value={component[propertyName]} onChange={e => {
+              // console.log(`change the fill/stroke color to: ${e.target.value}`);
+              updateCanvasComponent(component.uid, {...component, [propertyName]: e.target.value});
+            }} />
+          </p>
+        )
+      }
+      return null;
+    })}
   </div>
