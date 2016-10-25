@@ -40,16 +40,14 @@ class CanvasComponentMapper extends Component {
     this.props.updateCanvasComponent(this.props.component.uid, _newProps);
   }
 
-  resizeCurrentComponent(e, parentType) {
-    e.cancelBubble = true;
+  _resizeRectangale(activeResizeCirlce, propsCopy) {
     // get the recize circle instance
-    let activeResizeCirlce = e.target,
-        whichResizeCircle = activeResizeCirlce.getName();
+    let whichResizeCircle = activeResizeCirlce.getName();
     // get the x,y of the instance
     let activeResizeCirlceX = activeResizeCirlce.getX(),
         activeResizeCirlceY = activeResizeCirlce.getY();
 
-    // get all the resize circles (depends on the component type)
+    // get all the resize circles
     let componentRef = `${this.props.component.uid}-component`,
         groupRef = `${this.props.component.uid}-group`;
     let group = this.refs[componentRef].refs[groupRef];
@@ -62,37 +60,40 @@ class CanvasComponentMapper extends Component {
     // depending on the x,y of the instance,
     // we should update other resize circles,
     // and x of the component plus it's with/height
-    let _newProps = {...this.props.component};
-    let _newX = group.getX() - topLeftResizeCircle.getX(),
-        _newY = group.getY() - topLeftResizeCircle.getY();
-
     switch(whichResizeCircle) {
       case 'topLeft':
-        _newProps['x'] = group.getX() + activeResizeCirlce.getX();
-        _newProps['y'] = group.getY() + activeResizeCirlce.getY();
-        _newProps['width'] = topRightResizeCircle.getX() - activeResizeCirlce.getX();
-        _newProps['height'] = bottomLeftResizeCircle.getY() - activeResizeCirlce.getY();
+        propsCopy['x'] = group.getX() + activeResizeCirlce.getX();
+        propsCopy['y'] = group.getY() + activeResizeCirlce.getY();
+        propsCopy['width'] = topRightResizeCircle.getX() - activeResizeCirlce.getX();
+        propsCopy['height'] = bottomLeftResizeCircle.getY() - activeResizeCirlce.getY();
         break;
       case 'topRight':
-        // _newProps['x'] = group.getX() + activeResizeCirlce.getX();
-        _newProps['y'] = group.getY() + activeResizeCirlce.getY();
-        _newProps['width'] = activeResizeCirlce.getX() - topLeftResizeCircle.getX();
-        _newProps['height'] = bottomLeftResizeCircle.getY() - activeResizeCirlce.getY();
+        propsCopy['y'] = group.getY() + activeResizeCirlce.getY();
+        propsCopy['width'] = activeResizeCirlce.getX() - topLeftResizeCircle.getX();
+        propsCopy['height'] = bottomLeftResizeCircle.getY() - activeResizeCirlce.getY();
         break;
       case 'bottomRight':
-        // _newProps['x'] = group.getX() + activeResizeCirlce.getX();
-        // _newProps['y'] = group.getY() + activeResizeCirlce.getY();
-        _newProps['width'] = activeResizeCirlce.getX() - bottomLeftResizeCircle.getX();
-        _newProps['height'] = topRightResizeCircle.getY() + activeResizeCirlce.getY();
+        propsCopy['width'] = activeResizeCirlce.getX() - bottomLeftResizeCircle.getX();
+        propsCopy['height'] = topRightResizeCircle.getY() + activeResizeCirlce.getY();
         break;
       case 'bottomLeft':
-        _newProps['x'] = group.getX() + activeResizeCirlce.getX();
-        // _newProps['y'] = group.getY() + activeResizeCirlce.getY();
-        _newProps['width'] = bottomRightResizeCircle.getX() - activeResizeCirlce.getX();
-        _newProps['height'] = activeResizeCirlce.getY() - topLeftResizeCircle.getY();
+        propsCopy['x'] = group.getX() + activeResizeCirlce.getX();
+        propsCopy['width'] = bottomRightResizeCircle.getX() - activeResizeCirlce.getX();
+        propsCopy['height'] = activeResizeCirlce.getY() - topLeftResizeCircle.getY();
         break;
     }
 
+    // Return edited propsCopy
+    return propsCopy;
+  }
+
+  resizeCurrentComponent(e, parentType) {
+    e.cancelBubble = true;
+    // Get the copy, the resize is not pure.
+    let _newProps = {...this.props.component};
+    if(parentType === 'rect') {
+      _newProps = this._resizeRectangale(e.target, _newProps);
+    }
     this.props.updateCanvasComponent(this.props.component.uid, _newProps);
   }
 
