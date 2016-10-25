@@ -40,7 +40,7 @@ class CanvasComponentMapper extends Component {
     this.props.updateCanvasComponent(this.props.component.uid, _newProps);
   }
 
-  resizeCurrentComponent(e) {
+  resizeCurrentComponent(e, parentType) {
     e.cancelBubble = true;
     // get the recize circle instance
     let activeResizeCirlce = e.target,
@@ -67,12 +67,30 @@ class CanvasComponentMapper extends Component {
         _newY = group.getY() - topLeftResizeCircle.getY();
 
     switch(whichResizeCircle) {
-       case 'topLeft':
-          _newProps['x'] = group.getX() + activeResizeCirlce.getX();
-          _newProps['y'] = group.getY() + activeResizeCirlce.getY();
-          _newProps['width'] = topRightResizeCircle.getX() - topLeftResizeCircle.getX();
-          _newProps['height'] = bottomLeftResizeCircle.getY() - topLeftResizeCircle.getY();
-          break;
+      case 'topLeft':
+        _newProps['x'] = group.getX() + activeResizeCirlce.getX();
+        _newProps['y'] = group.getY() + activeResizeCirlce.getY();
+        _newProps['width'] = topRightResizeCircle.getX() - activeResizeCirlce.getX();
+        _newProps['height'] = bottomLeftResizeCircle.getY() - activeResizeCirlce.getY();
+        break;
+      case 'topRight':
+        // _newProps['x'] = group.getX() + activeResizeCirlce.getX();
+        _newProps['y'] = group.getY() + activeResizeCirlce.getY();
+        _newProps['width'] = activeResizeCirlce.getX() - topLeftResizeCircle.getX();
+        _newProps['height'] = bottomLeftResizeCircle.getY() - activeResizeCirlce.getY();
+        break;
+      case 'bottomRight':
+        // _newProps['x'] = group.getX() + activeResizeCirlce.getX();
+        // _newProps['y'] = group.getY() + activeResizeCirlce.getY();
+        _newProps['width'] = activeResizeCirlce.getX() - bottomLeftResizeCircle.getX();
+        _newProps['height'] = topRightResizeCircle.getY() + activeResizeCirlce.getY();
+        break;
+      case 'bottomLeft':
+        _newProps['x'] = group.getX() + activeResizeCirlce.getX();
+        // _newProps['y'] = group.getY() + activeResizeCirlce.getY();
+        _newProps['width'] = bottomRightResizeCircle.getX() - activeResizeCirlce.getX();
+        _newProps['height'] = activeResizeCirlce.getY() - topLeftResizeCircle.getY();
+        break;
     }
 
     this.props.updateCanvasComponent(this.props.component.uid, _newProps);
