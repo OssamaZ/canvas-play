@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { ChromePicker } from 'react-color';
 
 // Actions
 import {
@@ -52,15 +53,49 @@ const ComponentParametersUI = ({component, deleteComponent, updateCanvasComponen
       // color picker
       if(propertyName === 'fill' || propertyName === 'stroke') {
         return (
-          <p key={propertyName}>
+          <section key={propertyName}>
             <span>{propertyName}:</span>
-            <input type='color' value={component[propertyName]} onChange={e => {
-              // console.log(`change the fill/stroke color to: ${e.target.value}`);
-              updateCanvasComponent(component.uid, {...component, [propertyName]: e.target.value});
+            <ColorPickerWrapper color={component[propertyName]} onChange={color => {
+              updateCanvasComponent(component.uid, {...component, [propertyName]: color});
             }} />
-          </p>
+          </section>
         )
       }
       return null;
     })}
   </div>
+
+// My color picker wrapper
+// Why? because by default, the picker is shown, i don't want it to be visible unless the user clicks on the box
+// since it has a state .. well .. no stateless component for u :(
+class ColorPickerWrapper extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      isVisible: false // default
+    }
+  }
+
+  render() {
+    return (
+      <div className='color-picker-wrapper'>
+        <a href='#' style={{backgroundColor: this.props.color}} onClick={e => {
+            e.preventDefault();
+            this.setState({isVisible: !this.state.isVisible});
+          }}/>
+        {this.state.isVisible && <ChromePicker
+          color={this.props.color}
+          onChangeComplete={colorObject => {
+            let _chosenColor = colorObject.hex;
+            // Do you want to support rgba? well ..
+            if(colorObject.rgb.a < 1) {
+              let {r,g,b,a} = colorObject.rgb;
+              _chosenColor = `rgba(${r},${g},${b},${a})`;
+            }
+            this.props.onChange(_chosenColor);
+          }} />}
+      </div>
+    )
+  }
+
+}
