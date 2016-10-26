@@ -7,11 +7,12 @@
 	width: 100px;
 	flex-shrink: 0;
 	li {
-		padding: 10px;
 		list-style: none;
-		border-bottom: 1px solid darken(#fafafb, 2%);
+		border-bottom: 1px solid darken(#fafafb, 4%);
+		transition: background .3s;
 		a {
 			display: block;
+			padding: 20px 10px;
 			text-decoration: none;
 			font-size: 13px;
 			text-align: center;
@@ -19,10 +20,13 @@
 			color: $gray;
 		}
 		&:hover {
-			background: darken(#fafafb, 1%);
+			background: darken(#fafafb, 2%);
 		}
 		&.active {
-			background: darken(#fafafb, 2%);
+			background: darken(#fafafb, 3%);
+			a {
+				color: $blue;
+			}
 		}
 	}
 }
