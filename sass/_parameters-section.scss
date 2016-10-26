@@ -57,9 +57,16 @@
 		display: flex;
 		span {
 			display: inline-block;
-			width: 30%;
+			width: 40%;
 			text-transform: capitalize;
 			padding: 2px 0;
+			flex-shrink: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		input {
+			width: 115px;
+			@include input-focus;
 		}
 		.color-picker-wrapper {
 			flex-grow: 1;

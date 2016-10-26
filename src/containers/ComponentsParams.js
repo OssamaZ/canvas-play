@@ -50,8 +50,21 @@ const ComponentParametersUI = ({component, deleteComponent, updateCanvasComponen
       DELETE
      </a>
     {Object.keys(component).map(propertyName => {
+      // number
+      if(['width', 'height', 'strokeWidth'].indexOf(propertyName) > -1) {
+        return (
+          <section key={propertyName}>
+            <span>{propertyName}:</span>
+            <input type='number' value={component[propertyName]} onChange={e => {
+              let {value} = e.target;
+              console.dir({...component, [propertyName]: value})
+              updateCanvasComponent(component.uid, {...component, [propertyName]: value});
+            }} />
+          </section>
+        )
+      }
       // color picker
-      if(propertyName === 'fill' || propertyName === 'stroke') {
+      else if(['fill', 'stroke'].indexOf(propertyName > -1)) {
         return (
           <section key={propertyName}>
             <span>{propertyName}:</span>

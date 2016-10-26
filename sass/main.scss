@@ -1,5 +1,10 @@
 @import "normalize";
 @import "variables";
+@import "mixins";
+
+button:focus, input:focus, select:focus, textarea:focus {
+	outline: 0;
+}
 
 @import "layout";
 
