@@ -9,10 +9,12 @@ import {
 } from '../actions/canvasActions';
 
 import RectangleComponent from './RectangleComponent';
+import CircleComponent from './CircleComponent';
 
 // Mapper Object
 const MAPPER_OBJECT = {
-  'rectangle': RectangleComponent
+  'rectangle': RectangleComponent,
+  'circle': CircleComponent
 }
 
 class CanvasComponentMapper extends Component {
@@ -31,10 +33,11 @@ class CanvasComponentMapper extends Component {
   }
 
   onDragEnd(e) {
-    let _newProps = {...this.props.component};
-    _newProps.x = e.target.getX();
-    _newProps.y = e.target.getY();
-    this.props.updateCanvasComponent(this.props.component.uid, _newProps);
+    this.props.updateCanvasComponent(this.props.component.uid, {
+      ...this.props.component,
+      x: e.target.getX(),
+      y: e.target.getY()
+    });
   }
 
   render() {

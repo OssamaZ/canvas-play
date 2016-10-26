@@ -59,14 +59,14 @@ export default class RectangleComponent extends Component {
 
   render() {
     // Props
-    let {uid, x, y, width, height, fill, stroke, strokeWidth, onDragEnd} = this.props.componentInstance;
+    let {x, y, width, height, fill, stroke, strokeWidth} = this.props.componentInstance;
     return (
       <Group
         ref='myGroup'
         x={x}
         y={y}
         draggable={true}
-        onDragend={onDragEnd}
+        onDragend={this.props.onDragEnd}
         onClick={this.props.onClick}>
         <Rect
           ref='myRectangle'
@@ -89,5 +89,4 @@ export default class RectangleComponent extends Component {
       </Group>
     );
   }
-  
 }

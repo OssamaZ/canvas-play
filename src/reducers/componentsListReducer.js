@@ -13,7 +13,7 @@ const DEFAULT_COMPONENTS_LIST = {
 	// circle with default properties
 	'circle': {
 		type: 'circle',
-		radius: 10,
+		radius: 50,
 		fill: '#ffffff',
 		stroke: '#000000',
 		strokeWidth: 1

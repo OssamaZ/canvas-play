@@ -25,7 +25,7 @@ class CanvasStage extends Component {
     return (
       <Stage width={680} height={500} ref="myStage" className='canvas-container' onContentDblclick={e => {
           let {x,y} = this.refs.myStage.getStage().getPointerPosition();
-          this.props.addComponentToCanvas('rectangle', x, y)
+          this.props.addComponentToCanvas(this.props.activeDrawingComponent, x, y)
           .then(uid => {
             this.props.makeComponentActive(uid);
           })
@@ -42,8 +42,9 @@ class CanvasStage extends Component {
 }
 
 // .present is the way redux-undo tracks the different versions of my state
-const mapStateToProps = ({canvasComponents}) => {
+const mapStateToProps = ({activeDrawingComponent, canvasComponents}) => {
 	return {
+    activeDrawingComponent,
     canvasComponents: canvasComponents.present
 	}
 }

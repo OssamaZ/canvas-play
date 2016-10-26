@@ -51,20 +51,19 @@ const ComponentParametersUI = ({component, deleteComponent, updateCanvasComponen
      </a>
     {Object.keys(component).map(propertyName => {
       // number
-      if(['width', 'height', 'strokeWidth'].indexOf(propertyName) > -1) {
+      if(['width', 'height', 'strokeWidth', 'radius'].indexOf(propertyName) > -1) {
         return (
           <section key={propertyName}>
-            <span>{propertyName}:</span>
+            <span>{propertyName === 'strokeWidth' ? 's-width' : propertyName}:</span>
             <input type='number' value={component[propertyName]} onChange={e => {
               let {value} = e.target;
-              console.dir({...component, [propertyName]: value})
               updateCanvasComponent(component.uid, {...component, [propertyName]: value});
             }} />
           </section>
         )
       }
       // color picker
-      else if(['fill', 'stroke'].indexOf(propertyName > -1)) {
+      else if(['fill', 'stroke'].indexOf(propertyName) > -1) {
         return (
           <section key={propertyName}>
             <span>{propertyName}:</span>
