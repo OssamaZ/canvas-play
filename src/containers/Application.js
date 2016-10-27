@@ -10,6 +10,7 @@ const Application = () =>
   <div className='container-wrapper'>
     <section className='editor-actions-container'>
       <h3>Canvas playground</h3>
+      <span>- Double click on the canvas to add the selected component</span>
       <CanvasHistoryActions />
     </section>
     <section className='editor-container'>
